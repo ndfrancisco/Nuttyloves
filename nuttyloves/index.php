@@ -1,6 +1,6 @@
 <?php
 // Optional: include database connection if needed for dynamic products
-// include 'config.php';
+include 'config.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -102,48 +102,27 @@
 </nav>
 
 <div>
- <div class="product">
-  <img src="images/nuttyloves1.jpg" alt="8-in-1 Mix">
-    <div>
-      <h3>8-in-1 Trail Mix</h3>
-      <p>1kg pack featuring eight wholesome ingredients in one bag.</p>
-      <p><strong>₱379.00</strong></p>
-      <a href="add_to_cart.php?product_id=2" class="btn">Add to Cart</a>
-   </div>
-  </div>
-  
-</div>
-  <div class="product">
-    <img src="images/nuttyloves2.jpg" alt="Trail Mix">
-    <div>
-      <h3>Trail Mix</h3>
-      <p>1kg pack of nuts, dried fruits, and seeds — healthy and delicious.</p>
-      <p><strong>₱359.00</strong></p>
-      <a href="add_to_cart.php?product_id=1" class="btn">Add to Cart</a>
-    </div>
-  </div>
+  <?php
+  $sql = "SELECT * FROM products";         
+  $result = $conn->query($sql);             
 
+  if ($result->num_rows > 0) {              
+    while ($row = $result->fetch_assoc()) { 
+      echo '<div class="product">
+              <img src="images/nuttyloves' . $row['ProductID'] . '.jpg" alt="' . htmlspecialchars($row['Name']) . '">
+              <div>
+                <h3>' . htmlspecialchars($row['Name']) . '</h3>
+                <p>' . htmlspecialchars($row['Description']) . '</p>
+                <p><strong>₱' . number_format($row['Price'], 2) . '</strong></p>
+                <a href="add_to_cart.php?product_id=' . $row['ProductID'] . '" class="btn">Add to Cart</a>
+              </div>
+            </div>';
+    }
+  } else {
+    echo "<p>No products found.</p>";
+  }
+  ?>
 </div>
-  <div class="product">
-    <img src="images/nuttyloves3.jpg" alt="Trail Mix">
-    <div>
-      <h3>Premium Trail Mix</h3>
-      <p>1kg pack of nuts, dried fruits, and seeds — healthy and delicious.</p>
-      <p><strong>₱509.00</strong></p>
-      <a href="add_to_cart.php?product_id=1" class="btn">Add to Cart</a>
-    </div>
-  </div>
-  
-  </div>
-  <div class="product">
-    <img src="images/nuttyloves4.jpg" alt="Trail Mix">
-    <div>
-      <h3>Roasted Cashews</h3>
-      <p>1kg pack of nuts, dried fruits, and seeds — healthy and delicious.</p>
-      <p><strong>₱499.00</strong></p>
-      <a href="add_to_cart.php?product_id=1" class="btn">Add to Cart</a>
-    </div>
-  </div>
 
 <footer>
   &copy; <?= date('Y') ?> NuttyLoves. All rights reserved.

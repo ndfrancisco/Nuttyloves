@@ -129,7 +129,14 @@ include 'config.php';
       echo "<tr>
               <td>{$row['Name']}</td>
               <td>₱" . number_format($row['Price'], 2) . "</td>
-              <td>$qty</td>
+              <td>
+				<a href='update_cart.php?action=decrease&product_id={$row['ProductID']}' style='padding:4px 10px; background:#b71c1c; color:#fff; text-decoration:none; border-radius:4px;'>−</a>
+				$qty
+				<a href='update_cart.php?action=increase&product_id={$row['ProductID']}' style='padding:4px 10px; background:#2e7d32; color:#fff; text-decoration:none; border-radius:4px;'>+</a>
+				<br>
+				<a href='update_cart.php?action=remove&product_id={$row['ProductID']}' style='color:#c62828; font-size: 0.9em;'>Remove</a>
+				</td>
+
               <td>₱" . number_format($subtotal, 2) . "</td>
             </tr>";
     }
@@ -138,11 +145,17 @@ include 'config.php';
             <td colspan='3' class='total'>Total</td>
             <td class='total'>₱" . number_format($total, 2) . "</td>
           </tr>";
+		  
     echo "</table>";
+	
   }
   ?>
 </div>
-
+<form action="checkout.php" method="post">
+  <div style="text-align: center; margin-top: 20px;">
+    <button type="submit" class="btn">🛒 Checkout Now</button>
+  </div>
+</form>
 <footer>
   &copy; <?= date('Y') ?> NuttyLoves. All rights reserved.
 </footer>
